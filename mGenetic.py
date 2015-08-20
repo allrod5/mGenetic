@@ -29,6 +29,7 @@ def main(argv):
 	#check = getattr(__import__(module_name, fromlist=['check']), 'check')
 	try:
 		check = getattr(__import__("modules.%s" % module_name, fromlist=['check']), 'check')
+		populate = getattr(__import__("modules.%s" % module_name, fromlist=['populate']), 'populate')
 	except ImportError:
 		print("Specified module not found. Make sure it is under modules directory.")
 
@@ -39,15 +40,7 @@ def main(argv):
 	maxi = 0
 	generations = 1
 
-	population = []
-	fitness = []
-	for i in range(0,popsize):
-		population.append([1,2,3,4,5,6,7,8])
-		a = 0
-		while a < randint(variation[0],variation[1]):
-			a += 1
-			population[i] = mutate(population[i])
-		fitness.append(check(population[i]))
+	population, fitness = populate(popsize, variation, mutate, 8)
 
 	# Generations loop
 	while maxi != 8:
