@@ -1,9 +1,7 @@
 import sys
 import getopt
 import importlib
-from random import randint
-from genetics import reproduce
-from genetics import mutate
+import global_settings as this
 
 def printpop(population, fitness):
 	for i in range(0, len(population)):
@@ -30,20 +28,14 @@ def main(argv):
 	try:
 		check = getattr(__import__("modules.%s" % module_name, fromlist=['check']), 'check')
 		populate = getattr(__import__("modules.%s" % module_name, fromlist=['populate']), 'populate')
+		stopCriteria = getattr(__import__("modules.%s" % module_name, fromlist=['stopCriteria']), 'stopCriteria')
 	except ImportError:
 		print("Specified module not found. Make sure it is under modules directory.")
 
-	popsize = 40
-	variation = [4,14]  
-	die = 0.40 
-	kill_limit = die*popsize
-	maxi = 0
-	generations = 1
-
-	population, fitness = populate(popsize, variation, mutate, 8)
+	populate()
 
 	# Generations loop
-	while maxi != 8:
+	while not stopCriteria():
 		
 		#print("Starting gene pool:")
 		#printpop(population, fitness)
@@ -52,14 +44,14 @@ def main(argv):
 		killed = 0
 		# Starting at the lowest fitness up to kill limit
 		x = 0
-		while killed < kill_limit:
-			for i in range(0,popsize):
+		while killed < this.kill_limit:
+			for i in range(0,this.popsize):
 				try:
-					if fitness[i] == x:
-						population.pop(i)
-						fitness.pop(i)
+					if this.fitness[i] == x:
+						this.population.pop(i)
+						this.fitness.pop(i)
 						killed += 1
-					if killed == kill_limit:
+					if killed == this.kill_limit:
 						break
 				except:
 					break
@@ -69,33 +61,33 @@ def main(argv):
 		#printpop(population, fitness)
 		
 		children = 0
-		cpop = len(population)-1
+		cpop = len(this.population)-1
 		while children < killed:
-			offspring = reproduce(population[randint(0,cpop)],population[randint(0,cpop)])
+			offspring = this.reproduce(this.population[this.randint(0,cpop)],this.population[this.randint(0,cpop)])
 			for child in offspring:
-				population.append(child)
-				fitness.append(check(child))
+				this.population.append(child)
+				this.fitness.append(check(child))
 			children += 2 
 		
 		#print("Reproduced", children, "children (Added to gene pool)")
 
 		# adds one to the generations
-		generations += 1
+		this.generations += 1
 
 		# Looks for highest fitness in the group and checks if any achieved goal
-		maxi = 0
-		for i in range(0,popsize):
-			if fitness[i] > maxi:
-				maxi = fitness[i]
-				if maxi == 8:
-					print(population[i])
+		this.maxi = 0
+		for i in range(0,this.popsize):
+			if this.fitness[i] > this.maxi:
+				this.maxi = this.fitness[i]
+				if stopCriteria():
+					print(this.population[i])
 					break
 
 		#print("Fittest so far", maxi)
 		# printpop(population, fitness)
 		# raw_input()
 
-	print("Took", generations, "generations")
+	print("Took", this.generations, "generations")
 
 if __name__ == "__main__":
 	main(sys.argv[1:])

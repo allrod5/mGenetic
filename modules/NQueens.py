@@ -1,16 +1,16 @@
-from random import randint
+import global_settings as this
 
-def populate(popsize, variation, mutate, gene_length=8):
-	population = []
-	fitness = []
-	for i in range(0,popsize):
-		population.append([1,2,3,4,5,6,7,8])
+def populate():
+	this.population = []
+	this.fitness = []
+	for i in range(0,this.popsize):
+		this.population.append([1,2,3,4,5,6,7,8])
 		a = 0
-		while a < randint(variation[0],variation[1]):
+		while a < this.randint(this.variation[0],this.variation[1]):
 			a += 1
-			population[i] = mutate(population[i])
-		fitness.append(check(population[i]))
-	return population, fitness
+			this.population[i] = this.mutate(this.population[i])
+		this.fitness.append(check(this.population[i]))
+	return
 
 def check(array):
 	board=[1,2,3,4,5,6,7,8]
@@ -19,6 +19,7 @@ def check(array):
 	
 	for i in range(1,len(array)+1):
 		if i not in array:
+			print(array)
 			print("DUPLICATE NUMBER ERROR - KILLING GENE")
 			return 0
 
@@ -34,3 +35,6 @@ def check(array):
 	#print("OK")
 	# return fitness
 	return len(array)-collisions
+
+def stopCriteria():
+	return this.maxi == 8
