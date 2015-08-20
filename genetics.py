@@ -4,23 +4,20 @@ def reproduce(geneA, geneB):
 	crosspoint = randint(0,len(geneA))
 
 	# First Child : geneA then geneB
-    # child1 = geneA[0:len(geneA)/2]
 	child1 = geneA[0:crosspoint]
 	
-	for i in geneB:
-		if i not in child1:
-			child1.append(i)
+	for i in geneB[crosspoint+1:len(geneB)-1]:
+		child1.append(i)
 
 	if randint(0,100) > 20:
 		child1 = mutate(child1)
 	
 	# Second Child : geneB then geneA
-	# child2 = geneB[0:len(geneB)/2]
-	child2 = geneB[crosspoint:len(geneB) - 1]
+	child2 = geneB[0:crosspoint]
 
-	for i in geneA:
-		if i not in child2:
-			child2.append(i)
+	for i in geneA[crosspoint+1:len(geneA)-1]:
+		child2.append(i)
+		
 	if randint(0,100) > 20:
 		child2 = mutate(child2)
 	
