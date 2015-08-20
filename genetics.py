@@ -2,7 +2,7 @@ def reproduce(geneA, geneB):
 	# First Child : geneA then geneB
 	child1 = geneA[0:len(geneA)/2]
 	for i in geneB:
-		if i not in child:
+		if i not in child1:
 			child.append(i)
 
 	if randint(0,100) > 20:
