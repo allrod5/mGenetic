@@ -1,0 +1,2 @@
+# mGenetic
+Modular Genetic Algorithm
