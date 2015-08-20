@@ -1,3 +1,5 @@
+from random import randint
+
 def reproduce(geneA, geneB):
 
 	# Choose a random point to make the crossover process
@@ -17,7 +19,7 @@ def reproduce(geneA, geneB):
 
 	for i in geneA[crosspoint+1:len(geneA)-1]:
 		child2.append(i)
-		
+
 	if randint(0,100) > 20:
 		child2 = mutate(child2)
 	

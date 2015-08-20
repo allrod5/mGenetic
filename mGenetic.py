@@ -1,6 +1,7 @@
 import sys
 import getopt
 import importlib
+from random import randint
 from genetics import reproduce
 from genetics import mutate
 
@@ -23,9 +24,13 @@ def main(argv):
 		elif opt in ("-m", "--module"):
 			module_name = arg
 
-	importlib.Finder.find_module(module_name)
+	#importlib.Finder.find_module(module_name)
 	#check = importlib.import_module("./modules/%s" % module_name)
-	check = getattr(__import__(module_name, fromlist=['check']), 'check')
+	#check = getattr(__import__(module_name, fromlist=['check']), 'check')
+	try:
+		check = getattr(__import__("modules.%s" % module_name, fromlist=['check']), 'check')
+	except ImportError:
+		print("Specified module not found. Make sure it is under modules directory.")
 
 	popsize = 40
 	variation = [4,14]  
