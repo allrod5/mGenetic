@@ -1,20 +1,28 @@
 def reproduce(geneA, geneB):
+
+	# Choose a random point to make the crossover process
+	crosspoint = randint(0,len(geneA))
+
 	# First Child : geneA then geneB
-	child1 = geneA[0:len(geneA)/2]
+    # child1 = geneA[0:len(geneA)/2]
+	child1 = geneA[0:crosspoint]
+	
 	for i in geneB:
 		if i not in child1:
-			child.append(i)
+			child1.append(i)
 
 	if randint(0,100) > 20:
-		child = mutate(child)
+		child1 = mutate(child1)
 	
 	# Second Child : geneB then geneA
-	child2 = geneB[0:len(geneB)/2]
+	# child2 = geneB[0:len(geneB)/2]
+	child2 = geneB[crosspoint:len(geneB) - 1]
+
 	for i in geneA:
-		if i not in child:
-			child.append(i)
+		if i not in child2:
+			child2.append(i)
 	if randint(0,100) > 20:
-		child = mutate(child)
+		child2 = mutate(child2)
 	
 	return child1, child2
 
