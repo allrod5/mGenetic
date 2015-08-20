@@ -31,5 +31,6 @@ def check(array):
 		if col == 1:
 			collisions += 1
 
+	#print("OK")
 	# return fitness
 	return len(array)-collisions
