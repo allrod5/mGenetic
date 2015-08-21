@@ -1,28 +1,40 @@
 import global_settings as this
+import math
 
 def populate():
-	this.int_a = int(input("Board size: "))
+	this.dimensions = int(input("Board size: "))
 	this.population = []
 	this.fitness = []
 	for i in range(0,this.popsize):
 		gene = []
-		for j in range(this.int_a):
-			gene.append(j+1)
+		this.block_size = math.ceil(math.log2(this.dimensions))
+		for j in range(this.dimensions):
+			tmp = [int(x) for x in bin(j)[2:]]
+			while len(tmp)!=this.block_size:
+				tmp.insert(0,0)
+			gene += tmp
 		this.population.append(gene)
 		a = 0
 		while a < this.randint(this.variation[0],this.variation[1]):
 			a += 1
 			this.population[i] = this.mutate(this.population[i])
 		this.fitness.append(check(this.population[i]))
+
 	return
 
-def check(array):
+def check(gene):
 	collisions = 0
-	
+	array = []
+	for i in range(0, len(gene), this.block_size):
+		s = ''
+		for j in range(0, this.block_size):
+			s += str(gene[i+j])
+		array.append(int(s, 2)+1)
+	print(array)
 	for i in range(1,len(array)+1):
 		if i not in array:
 			return 0
-
+	
 	for i in range(0, len(array)):
 		col = 0
 		for j in range(0, len(array)):
@@ -36,4 +48,4 @@ def check(array):
 	return len(array)-collisions
 
 def stopCriteria():
-	return this.maxi == this.int_a
+	return this.maxi == this.dimensions

@@ -10,6 +10,8 @@ maxi = 0
 generations = 1
 population = []
 fitness = []
+dimensions = 1
+block_size = 1
 
 int_a = 0
 int_b = 0

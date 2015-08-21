@@ -1,3 +1,4 @@
+import global_settings as this
 from random import randint
 
 def reproduce(geneA, geneB):
@@ -27,10 +28,10 @@ def reproduce(geneA, geneB):
 
 def mutate(gene):
 	#print(len(gene))
-	a = randint(0,len(gene)-1)
-	b = randint(0,len(gene)-1)
+	a = randint(0,len(gene)-1-this.block_size)
+	b = randint(0,len(gene)-1-this.block_size)
 	# swap
-	c = gene[a]
-	gene[a] = gene[b]
-	gene[b] = c
+	c = gene[a:a+this.block_size]
+	gene[a:a+this.block_size] = gene[b:b+this.block_size]
+	gene[b:b+this.block_size] = c
 	return gene
