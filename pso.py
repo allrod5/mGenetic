@@ -21,8 +21,8 @@ def sigmoid(t):
 
 def pso():
 	for i, j in product(range(1, n + 1), range(1, d + 1)):
-		rand1 = randint(1,100) / 100.0
-		rand2 = randint(1,100) / 100.0
+		rand1 = uniform(0.0,1.0)
+		rand2 = uniform(0.0,1.0)
 		v[i][j] = w * v[i][j] + c1 * rand1 * (p[i][j] - x[i][j]) + c2 * rand2 * (g[j] - x[i][j])
 
 def main(argv):

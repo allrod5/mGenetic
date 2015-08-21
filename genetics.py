@@ -4,7 +4,7 @@ from random import randint
 def reproduce(geneA, geneB):
 
 	# Choose a random point to make the crossover process
-	crosspoint = randint(1,len(geneA)-1)
+	crosspoint = randint(1,this.dimensions-1)*this.block_size
 
 	# First Child : geneA then geneB
 	child1 = geneA[:crosspoint]

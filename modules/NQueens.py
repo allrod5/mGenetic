@@ -30,7 +30,7 @@ def check(gene):
 		for j in range(0, this.block_size):
 			s += str(gene[i+j])
 		array.append(int(s, 2)+1)
-	print(array)
+	
 	for i in range(1,len(array)+1):
 		if i not in array:
 			return 0

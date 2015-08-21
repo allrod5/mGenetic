@@ -1,6 +1,7 @@
 from genetics import reproduce
 from genetics import mutate
 from random import randint
+from random import uniform
 
 popsize = 40
 variation = [4,14]  
