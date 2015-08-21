@@ -5,34 +5,39 @@ def populate():
     this.population = []
     this.fitness = []
 
-    def make_maze(w = 8, h = 4):
-    	vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
-    	nowalls = []
+    #def make_maze(w = 8, h = 4):
+    w = 8
+    h = 4
+    vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
+    nowalls = []
+    x = randrange(h)
+    y = randrange(w)
 
-    	def walk(x, y):
-    		vis[x][y] = 1
+    #def walk(x, y):
+    vis[x][y] = 1
+	d = [(x - 1, y), (x, y + 1), (x + 1, y), (x, y - 1)]
+	shuffle(d)
 
-    		d = [(x - 1, y), (x, y + 1), (x + 1, y), (x, y - 1)]
-    		shuffle(d)
-    		for (xx, yy) in d:
-    			if vis[xx][yy]: continue
-    			nowalls.append((x,y,xx,yy))
-    			walk(xx, yy)
+    for (xx, yy) in d:
+    	if vis[xx][yy]:
+            continue
 
-    	walk(randrange(h), randrange(w))
-    	return(nowalls)
+    	nowalls.append((x,y,xx,yy))
+    	walk(xx, yy)
 
-    def draw_maze(nowalls, w = 8, h = 4):
-    	ver = [["|  "] * w + ['|'] for _ in range(h)] + [[]]
-    	hor = [["+--"] * w + ['+'] for _ in range(h + 1)]
+    # walk(randrange(h), randrange(w))
+    nw = nowalls #?
 
-    	for (x,y,xx,yy) in nowalls:
-    		print(x,y,xx,yy)
-    		if xx == x: ver[x][max(y, yy)] = "   "
-    		if yy == y: hor[max(x, xx)][y] = "+  "
+    ver = [["|  "] * w + ['|'] for _ in range(h)] + [[]]
+    hor = [["+--"] * w + ['+'] for _ in range(h + 1)]
 
-    	for (a, b) in zip(hor, ver):
-    		print(''.join(a + ['\n'] + b))
+    for (x,y,xx,yy) in nowalls:
+    	print(x,y,xx,yy)
+    	if xx == x: ver[x][max(y, yy)] = "   "
+    	if yy == y: hor[max(x, xx)][y] = "+  "
+
+    for (a, b) in zip(hor, ver):
+    	print(''.join(a + ['\n'] + b))
 
     def posabs(x, y, w):
     	return(x*w+y)
@@ -41,11 +46,13 @@ def populate():
     	return(pos//w, pos%w)
 
     def nowallsabs(nowallsidx, w = 8):
-            return [(posabs(x,y,w), posabs(xx,yy,w)) for (x,y,xx,yy) in nowallsidx]
+        return [(posabs(x,y,w), posabs(xx,yy,w)) for (x,y,xx,yy) in nowallsidx]
 
-    nw = make_maze()
-    draw_maze(nw)
+    # nw = make_maze()
+    # draw_maze(nw)
     nwabs = nowallsabs(nw)
+
+
 
 
 def check(array):
