@@ -18,6 +18,9 @@ n = 10
 #dimensions
 d = 1
 
+def sigmoid(t):
+	return 1 / (1 + exp(-t))
+
 def pso():
 	for i, j in product(range(1, n + 1), range(1, d + 1)):
 		rand1 = randint(1,100) / 100.0
