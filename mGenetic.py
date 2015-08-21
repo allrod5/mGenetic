@@ -32,6 +32,10 @@ def main(argv):
 	except ImportError:
 		print("Specified module not found. Make sure it is under modules directory.")
 
+	this.popsize = int(input("Population size: "))
+	this.die = float(input("Death rate: "))
+	this.kill_limit = this.die*this.popsize
+
 	populate()
 
 	# Generations loop
@@ -85,7 +89,7 @@ def main(argv):
 
 		#print("Fittest so far", maxi)
 		# printpop(population, fitness)
-		# raw_input()
+		# input()
 
 	print("Took", this.generations, "generations")
 
