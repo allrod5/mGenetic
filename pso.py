@@ -5,16 +5,17 @@ import global_settings as this
 from itertools import product
 import copy
 from random import uniform
+from math import exp
 
-#inertial coefficient 
-w = 0.5
+#inertial coefficient
+#w = 0.5
 
 #learning rates
-c1 = 2.0
-c2 = 2.0
+#c1 = 2.0
+#c2 = 2.0
 
 #initial values of velocity, position and stuff
-v = []
+#v = []
 #p[0][0] = 1.0
 #g[0][0] = 1.0
 #x[0][0] = 1.0
@@ -27,18 +28,41 @@ v = []
 def sigmoid(t):
 	return 1 / (1 + exp(-t))
 
-def pso(p, g, n, d):
+def pso(p, v):
+	c1 = 2.0
+	c2 = 2.0
+	w = 0.5
 	fill_v = False
 	if(len(v)==0):
 		fill_v = True
-	for i, j in product(range(1, n + 1), range(1, d + 1)):
+	for i, j in product(range(len(this.population)), range(this.dimensions*3)):
 		rand1 = uniform(0.0,1.0)
 		rand2 = uniform(0.0,1.0)
+		g = this.population[i]
+		g_fitness = this.fitness[i]
 		try:
+			if this.fitness[i-1] > g_fitness:
+				g = this.population[i-1]
+				g_fitness = this.fitness[i-1]
+		except:
+			pass
+		try:
+			if this.fitness[i+1] > g_fitness:
+				g = this.population[i+1]
+				g_fitness = this.fitness[i+1]
+		except:
+			pass
+		if(fill_v):
+			try:
+				v[i].append(w + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j]))
+			except:
+				v.append([w + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j])])
+		else:
+			v[i][j] = w * v[i][j] + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j])
+		'''try:
 			v[i][j] = w * v[i][j] + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j])
 		except:
 			try:
-				v[i]
 				v[i].append(w + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j]))
 			except:
 				print(i)
@@ -46,7 +70,7 @@ def pso(p, g, n, d):
 				print(len(p))
 				print(len(this.population))
 				print(len(g))
-				v.append([w + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j])])
+				v.append([w + c1 * rand1 * (p[i][j] - this.population[i][j]) + c2 * rand2 * (g[j] - this.population[i][j])])'''
 	return v
 
 def main(argv):
@@ -77,17 +101,26 @@ def main(argv):
 
 	this.popsize = int(input("Population size: "))
 
-	
+
 
 	populate()
-	print(len(this.population))
 	p = copy.deepcopy(this.population)
-	print(len(p))
 	p_fitness = copy.deepcopy(this.fitness)
-
+	v = []
+	this.generations = 0
 	while not stopCriteria():
+		this.generations += 1
+		v = pso(p, v)
+		for i in range(len(v)):
+			for j in range(len(v[i])):
+				if uniform(0.0,1.0) < sigmoid(v[i][j]):
+					this.population[i][j] = 1
+				else:
+					this.population[i][j] = 0
+			this.fitness[i] = check(this.population[i])
+
 		this.maxi = 0
-		for i in range(0,this.popsize):
+		for i in range(0, this.popsize):
 			if this.fitness[i] > p_fitness[i]:
 				p[i] = copy.deepcopy(this.population[i])
 				p_fitness[i] = this.fitness[i]
@@ -107,16 +140,8 @@ def main(argv):
 						array.append(int(s, 2)+1)
 					print(array)
 					break
-		v = pso(p, g, this.popsize, this.dimensions)
 
-		for i in range(len(v)):
-			for j in range(len(v[i])):
-				if uniform(0.0,1.0) < sigmoid(v[i][j]):
-					this.population[i][j] = 1
-				else:
-					this.population[i][j] = 0
-			fitness[i] = check(this.population[i])
-
+	print("Took", this.generations, "generations")
 
 
 
