@@ -84,7 +84,13 @@ def main(argv):
 			if this.fitness[i] > this.maxi:
 				this.maxi = this.fitness[i]
 				if stopCriteria():
-					print(this.population[i])
+					array = []
+					for j in range(0, len(this.population[i]), this.block_size):
+						s = ''
+						for k in range(0, this.block_size):
+							s += str(this.population[i][j+k])
+						array.append(int(s, 2)+1)
+					print(array)
 					break
 
 		#print("Fittest so far", maxi)
