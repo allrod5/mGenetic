@@ -19,8 +19,6 @@ def check(array):
 	
 	for i in range(1,len(array)+1):
 		if i not in array:
-			print(array)
-			print("DUPLICATE NUMBER ERROR - KILLING GENE")
 			return 0
 
 	for i in range(0, len(array)):
@@ -32,8 +30,7 @@ def check(array):
 		if col == 1:
 			collisions += 1
 
-	#print("OK")
-	# return fitness
+	# Return fitness score
 	return len(array)-collisions
 
 def stopCriteria():
