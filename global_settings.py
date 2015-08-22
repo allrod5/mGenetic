@@ -3,16 +3,16 @@ from genetics import mutate
 from random import randint
 from random import uniform
 
-popsize = 40
-variation = [4,14]  
-die = 0.40 
-kill_limit = die*popsize
-maxi = 0
-generations = 1
-population = []
-fitness = []
-dimensions = 1
-block_size = 1
+popsize = 40 # population size
+variation = [4,14]  # vector to pick a number to make mutations in NQueens module
+die = 0.40  # death rate
+kill_limit = die*popsize  # number of individuals to die from the population
+maxi = 0  # maximum fitness
+generations = 1 # number of current generations
+population = [] # the population
+fitness = [] # fitness of population individuals
+dimensions = 1 # board size / hypercube dimension
+block_size = 1 # number of bits to represent an item in an individual's solution
 
 int_a = 0
 int_b = 0

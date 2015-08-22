@@ -71,6 +71,7 @@ def main(argv):
 		#print("Survial of fittest", killed, "killed off (Removed from gene pool)")
 		#printpop(population, fitness)
 
+		# Randomly pick cromossomes for reproduction until population is filled up again
 		children = 0
 		cpop = len(this.population)-1
 		while children < killed:
@@ -85,7 +86,7 @@ def main(argv):
 		# adds one to the generations
 		this.generations += 1
 
-		# Looks for highest fitness in the group and checks if any achieved goal
+		# Looks for highest fitness in the group and checks if any achieved the goal
 		this.maxi = 0
 		for i in range(0,this.popsize):
 			if this.fitness[i] > this.maxi:

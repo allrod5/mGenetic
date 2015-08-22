@@ -25,10 +25,11 @@ import time
 
 #p_fitness = []
 
-
+# sigmoid function to normalize v to the interval [0,1]
 def sigmoid(t):
 	return 1 / (1 + exp(-t))
 
+# pso function returns the velocity vector
 def pso(p, p_fitness, v):
 	c1 = 2.0
 	c2 = 2.0
@@ -131,15 +132,16 @@ def main(argv):
 	this.generations = 0
 	while not stopCriteria():
 		this.generations += 1
-		v = pso(p, p_fitness, v)
-		for i in range(len(v)):
+		v = pso(p, p_fitness, v) # get velocities
+		for i in range(len(v)): # apply velocities
 			for j in range(len(v[i])):
 				if uniform(0.0,1.0) < sigmoid(v[i][j]):
 					this.population[i][j] = 1
 				else:
 					this.population[i][j] = 0
-			this.fitness[i] = check(this.population[i])
+			this.fitness[i] = check(this.population[i]) # update fitness
 
+		# check if any individual achieved the goal
 		this.maxi = 0
 		for i in range(0, this.popsize):
 			if this.fitness[i] > p_fitness[i]:

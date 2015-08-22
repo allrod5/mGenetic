@@ -3,7 +3,7 @@ from random import randint
 
 def reproduce(geneA, geneB):
 
-	# Choose a random point to make the crossover process
+	# Choose a random point to make the crossover
 	crosspoint = randint(1,this.dimensions-1)*this.block_size
 
 	# First Child : geneA then geneB
