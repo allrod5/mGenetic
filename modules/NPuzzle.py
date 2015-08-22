@@ -1,6 +1,7 @@
 import global_settings as this
 from random import shuffle
 import math
+import copy
 
 def solvable():
 	if len(this.list_a) == 0:
@@ -43,12 +44,13 @@ def populate():
 
 	this.block_size = 2
 	for i in range(this.popsize):
-		this.population[i].append([])
+		this.population.append([])
 		for j in range(this.dimensions*this.dimensions*this.dimensions):
-			tmp = [int(x) for x in bin(randint(0,3))[2:]]
+			tmp = [int(x) for x in bin(this.randint(0,3))[2:]]
 			while len(tmp)!=this.block_size:
 				tmp.insert(0,0)
-			this.population[i][j] += tmp
+			this.population[i] += tmp
+		this.fitness.append(check(this.population[i]))
 
 
 
@@ -60,12 +62,12 @@ def check(array):
 				break
 
 		if i==0 or i==this.dimensions-1 or i==len(game)-1 or i==len(game)-this.dimensions:
-			mod = 1
+			mod = 2
 		elif 0 < i < this.dimensions-1 or len(game)-this.dimensions < i < len(game)-1 \
 			or i%this.dimensions==0 or i%this.dimensions==this.dimensions-1:
-			mod = 2
-		else:
 			mod = 3
+		else:
+			mod = 4
 
 		moves = []
 		if i%this.dimensions!=0:
@@ -77,17 +79,26 @@ def check(array):
 		if i <= len(game)-this.dimensions:
 			moves.append(i+this.dimensions)
 
+		game[i], game[moves[bit%mod]] = game[moves[bit%mod]], game[i]
+
+	for i in range(len(game)):
+		if i%this.dimensions == 0:
+			print()
+		print(game[i], end='')
 
 
-	corrects = 0
-	for i in range(len(array)):
-		if i+1 == array[i]:
-			corrects += 1
-
-	return corrects+1
+	mDistance = 0
+	for i in range(len(game)):
+		if(game[i]):
+			mDistance += abs((i)%this.dimensions-(game[i]-1)%this.dimensions)
+			mDistance += abs((i)//this.dimensions-(game[i]-1)//this.dimensions)
+	print()
+	print(2*this.dimensions*this.dimensions*this.dimensions-mDistance)
+	print("\n")
+	return 2*this.dimensions*this.dimensions*this.dimensions-mDistance
 
 def stopCriteria():
-	this.maxi == this.dimensions*this.dimensions-1
+	this.maxi ==  2*this.dimensions*this.dimensions*this.dimensions
 	'''for i in range(1, len(array)):
 		if array[i] >= array[i-1]:
 			return False

@@ -40,10 +40,10 @@ def main(argv):
 
 	# Generations loop
 	while not stopCriteria():
-		
+
 		#print("Starting gene pool:")
 		#printpop(population, fitness)
-		
+
 		# Picks top genes to be parents, kills rest
 		killed = 0
 		# Starting at the lowest fitness up to kill limit
@@ -60,10 +60,10 @@ def main(argv):
 				except:
 					break
 			x += 1
-		
+
 		#print("Survial of fittest", killed, "killed off (Removed from gene pool)")
 		#printpop(population, fitness)
-		
+
 		children = 0
 		cpop = len(this.population)-1
 		while children < killed:
@@ -71,8 +71,8 @@ def main(argv):
 			for child in offspring:
 				this.population.append(child)
 				this.fitness.append(check(child))
-			children += 2 
-		
+			children += 2
+
 		#print("Reproduced", children, "children (Added to gene pool)")
 
 		# adds one to the generations
