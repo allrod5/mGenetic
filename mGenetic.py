@@ -2,6 +2,7 @@ import sys
 import getopt
 import importlib
 import global_settings as this
+import time
 
 def printpop(population, fitness):
 	for i in range(0, len(population)):
@@ -32,10 +33,16 @@ def main(argv):
 	except ImportError:
 		print("Specified module not found. Make sure it is under modules directory.")
 
+	
+
 	this.popsize = int(input("Population size: "))
 	this.die = float(input("Death rate: "))
 	this.kill_limit = this.die*this.popsize
 
+
+	#f = open('mGenetic-'+module_name+'_'+str(this.popsize)+'-'+str(this.die)+'-8.csv', 'a')
+
+	start = time.perf_counter()
 	populate()
 
 	# Generations loop
@@ -96,7 +103,10 @@ def main(argv):
 		#print("Fittest so far", maxi)
 		# printpop(population, fitness)
 		# input()
+	end = time.perf_counter()
+	elapsed = end - start
 
+	#f.write(str(elapsed)+','+str(this.generations)+'\n')
 	print("Took", this.generations, "generations")
 
 if __name__ == "__main__":

@@ -5,9 +5,9 @@ def populate():
 	this.dimensions = int(input("Board size: "))
 	this.population = []
 	this.fitness = []
+	this.block_size = math.ceil(math.log2(this.dimensions))
 	for i in range(0,this.popsize):
 		gene = []
-		this.block_size = math.ceil(math.log2(this.dimensions))
 		for j in range(this.dimensions):
 			tmp = [int(x) for x in bin(j)[2:]]
 			while len(tmp)!=this.block_size:
