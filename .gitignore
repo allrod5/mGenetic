@@ -3,4 +3,5 @@
 *.ods
 *.png
 *.svg
-
+*.ods#
+*.csv#
