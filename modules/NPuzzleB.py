@@ -41,17 +41,11 @@ def populate():
 
 
 
-def check(gene):
+def check(array):
 	game = copy.deepcopy(this.list_a)
 	this.int_a = -1
 	this.list_c = []
 	counter = 0
-	array = []
-	for i in range(0, len(gene), this.block_size):
-		s = ''
-		for j in range(0, this.block_size):
-			s += str(gene[i+j])
-		array.append(int(s, 2))
 	#print(array)
 	#print("##############\n## Solution ##\n##############\n")
 	for bit in array:

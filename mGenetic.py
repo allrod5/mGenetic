@@ -35,15 +35,14 @@ def main(argv):
 
 	
 
-	this.popsize = int(input("Population size: "))
-	this.die = float(input("Death rate: "))
+	this.popsize = 1000#int(input("Population size: "))
+	this.die = 0.4#float(input("Death rate: "))
 	this.kill_limit = this.die*this.popsize
-
-
-	#f = open('mGenetic-'+module_name+'_'+str(this.popsize)+'-'+str(this.die)+'-8.csv', 'a')
 
 	start = time.perf_counter()
 	populate()
+
+	f = open('mGenetic-'+module_name+'_'+str(this.popsize)+'-'+str(this.die)+'-'+str(this.dimensions)+'.csv', 'a')
 
 	# Generations loop
 	while not stopCriteria():
@@ -107,7 +106,7 @@ def main(argv):
 	end = time.perf_counter()
 	elapsed = end - start
 
-	#f.write(str(elapsed)+','+str(this.generations)+'\n')
+	f.write(str(elapsed)+','+str(this.generations)+'\n')
 	print("Took", this.generations, "generations")
 
 if __name__ == "__main__":

@@ -31,9 +31,9 @@ def sigmoid(t):
 
 # pso function returns the velocity vector
 def pso(p, p_fitness, v):
-	c1 = 2.0
-	c2 = 2.0
-	w = 0.5
+	c1 = 1.0
+	c2 = 1.0
+	w = 1.0
 	fill_v = False
 	if(len(v)==0):
 		fill_v = True
@@ -117,15 +117,14 @@ def main(argv):
 	except ImportError:
 		print("Specified module not found. Make sure it is under modules directory.")
 
-	this.popsize = int(input("Population size: "))
-
-
-	#f = open('mPSO-'+module_name+'_'+str(this.popsize)+'-8.csv', 'a')
+	this.popsize = 1000#int(input("Population size: "))
 
 	start = time.perf_counter()
 
-
 	populate()
+
+	f = open('mPSO-'+module_name+'_'+str(this.popsize)+'-'+str(this.dimensions)+'.csv', 'a')
+
 	p = copy.deepcopy(this.population)
 	p_fitness = copy.deepcopy(this.fitness)
 	v = []
@@ -167,7 +166,7 @@ def main(argv):
 	end = time.perf_counter()
 	elapsed = end - start
 
-	#f.write(str(elapsed)+','+str(this.generations)+'\n')
+	f.write(str(elapsed)+','+str(this.generations)+'\n')
 
 	print("Took", this.generations, "generations")
 

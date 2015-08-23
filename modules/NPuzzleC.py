@@ -32,7 +32,7 @@ def populate():
 	this.block_size = 2
 	for i in range(this.popsize):
 		this.population.append([])
-		for j in range(this.dimensions*this.dimensions*this.dimensions*this.dimensions):
+		for j in range(this.dimensions*this.dimensions*this.dimensions*this.dimensions*this.dimensions):
 			tmp = [int(x) for x in bin(this.randint(0,2))[2:]]
 			while len(tmp)!=this.block_size:
 				tmp.insert(0,0)
